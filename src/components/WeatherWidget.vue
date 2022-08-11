@@ -10,6 +10,7 @@
                 @onDragStart="onDragStart"
             />
         </transition>
+        <weather-empty-result v-if="weatherList.length === 0"/>
         <weather-location-list
             class="weather-widget__locations custom-scroll"
             :class="{
@@ -30,6 +31,7 @@ import { defineComponent } from 'vue';
 import WeatherSettingsSwitch from '@/components/WeatherSettingsSwitch.vue';
 import WeatherLocationCard from '@/components/WeatherLocationCard.vue';
 import WeatherLocationList from '@/components/WeatherLocationList.vue';
+import WeatherEmptyResult from '@/components/WeatherEmptyResult.vue';
 import WeatherSettings from '@/components/WeatherSettings.vue';
 import SettingsActiveState from '@/services/State/SettingsActiveState';
 import SortDrugAndDropHook from '@/hooks/SortDrugAndDropHook';
@@ -40,7 +42,7 @@ export default defineComponent({
     name: 'WeatherWidget',
     components: {
         WeatherLocationCard, WeatherSettings,
-        WeatherLocationList, WeatherSettingsSwitch
+        WeatherLocationList, WeatherSettingsSwitch, WeatherEmptyResult
     },
     setup() {
         const settingsActiveState = new SettingsActiveState();                                                      // global settings active flag
