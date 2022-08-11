@@ -20,7 +20,7 @@ export default class SimpleUtils {
     static getOrder(list: any[]): number {
         const lastElement = list[list.length - 1];
 
-        if (lastElement.order && typeof lastElement.order == 'number') {
+        if (lastElement && lastElement.order && typeof lastElement.order == 'number') {
             return list.length ? (list[list.length - 1].order + 1) : 1;
         } else {
             return list.length + 1;

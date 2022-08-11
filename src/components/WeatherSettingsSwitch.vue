@@ -23,7 +23,7 @@ export default defineComponent({
         };
 
         return {
-            toggleSettingsActive, settingsActive
+            settingsActive, toggleSettingsActive
         };
     }
 });
@@ -32,6 +32,7 @@ export default defineComponent({
 <style lang="scss" scoped>
     .weather-settings-button {
         position: absolute;
+        z-index: 2;
         right: 10px;
         top: 10px;
         width: 30px;
@@ -52,7 +53,4 @@ export default defineComponent({
             transform: rotate(90deg) scale(1.1);
         }
     }
-
-
-
 </style>

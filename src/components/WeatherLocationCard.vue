@@ -22,15 +22,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, computed } from 'vue';
 import type WeatherResponse from '@/interfaces/Api/WeatherResponse';
 import WeatherInfo from '@/services/WeatherInfo';
-import { defineComponent, ref, computed } from 'vue';
 
 export default defineComponent({
     name: 'WeatherLocationCard',
-    components: {
-
-    },
     props: {
         weather: {
             type: Object as () => WeatherResponse,
@@ -51,13 +48,17 @@ export default defineComponent({
 <style lang="scss" scoped>
     .weather-location-card {
         width: 100%;
-        border: 1px solid;
+        border-bottom: 1px solid #9ac6f1;
         padding: 10px;
-        font-size: 20px;
+        font-size: 16px;
 
         &__location {
             font-weight: 700;
             font-size: 25px;
+            width: calc(100% - 25px);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
         &__weather {
             display: flex;
@@ -70,9 +71,15 @@ export default defineComponent({
         &__other-info {
             display: grid;
             grid-template-columns: 1fr 1fr;
+            background: #70B0EF;
+            padding: 10px 10px;
+            border-radius: 10px;
+        }
+        &__info {
+            line-height: 130%;
         }
         &__detailed-info {
-            margin-bottom: 24px;
+            margin-bottom: 12px;
         }
         &__image {
             width: 150px;

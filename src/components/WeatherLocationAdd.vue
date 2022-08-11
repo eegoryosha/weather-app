@@ -12,9 +12,7 @@
 </template>
 
 <script lang="ts">
-import SimpleUtils from '@/helpers/SimpleUtils';
 import type WeatherResponse from '@/interfaces/Api/WeatherResponse';
-import WeatherApi from '@/services/Api/WeatherApi';
 import { defineComponent, ref } from 'vue';
 import AddLocationHook from '@/hooks/AddLocationHook';
 
@@ -28,7 +26,6 @@ export default defineComponent({
     },
     setup(props, context) {
         const { location, validationError, addLocation } = new AddLocationHook(props.weatherList, context).initHook();
-
 
         return {
             addLocation, location, validationError,
@@ -62,10 +59,11 @@ export default defineComponent({
             margin-bottom: 4px;
         }
         &__error {
-            font-size: 20px;
-            color: #b13d3d;
+            font-weight: 300;
+            font-size: 13px;
+            color: #fcdcdc;
             position: absolute;
-            bottom: -20px;
+            bottom: -19px;
         }
     }
 </style>

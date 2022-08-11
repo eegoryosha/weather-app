@@ -58,17 +58,24 @@ export default defineComponent({
     .weather-settings-card {
         display: flex;
         justify-content: space-between;
-        background-color: #EDEBE9;
+        background-color: #70B0EF;
         padding: 8px 10px;
         margin-bottom: 12px;
         width: 100%;
+        border-radius: 10px;
 
         &__body {
             display: flex;
             align-items: center;
+            width: calc(100% - 20px);
         }
         &__name {
-            font-size: 20px;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
         &__burger {
             width: 22px;

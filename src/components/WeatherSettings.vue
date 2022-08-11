@@ -7,6 +7,7 @@
                     <weather-settings-card
                         v-for="weather in weatherList"
                         :key="weather.name"
+
                         :weather="weather"
 
                         @removeLocation="$emit('removeLocation', weather)"
@@ -27,11 +28,11 @@
 
 <script lang="ts">
 import { defineComponent} from 'vue';
+import WeatherLocationAdd from '@/components/WeatherLocationAdd.vue';
 import WeatherSettingsCard from '@/components/WeatherSettingsCard.vue';
 import WeatherSettingsList from '@/components/WeatherSettingsList.vue';
-import type WeatherResponse from '@/interfaces/Api/WeatherResponse';
 import WeatherSettingsTitle from '@/components/WeatherSettingsTitle.vue';
-import WeatherLocationAdd from '@/components/WeatherLocationAdd.vue';
+import type WeatherResponse from '@/interfaces/Api/WeatherResponse';
 
 export default defineComponent({
     name: 'WeatherSettings',
@@ -51,6 +52,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
     .weather-settings {
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: #519CEA;
         &__title {
             font-weight: 700;
             font-size: 25px;

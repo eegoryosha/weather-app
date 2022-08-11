@@ -2,7 +2,7 @@ import SimpleUtils from '@/helpers/SimpleUtils';
 import WeatherResponse from '@/interfaces/Api/WeatherResponse';
 import { AddLocationInterfaceInit } from '@/interfaces/Hooks/AddLocationInterface';
 import WeatherApi from '@/services/Api/WeatherApi';
-import { ref, Ref, SetupContext } from 'vue';
+import { ref, SetupContext } from 'vue';
 import AbstractHook from './AbstractHook';
 
 export default class AddLocationHook extends AbstractHook {
@@ -28,6 +28,12 @@ export default class AddLocationHook extends AbstractHook {
                 return;
             }
 
+            if (this.weatherList.length >= 7) {
+                validationError.value = 'you can add a maximum of 7 locations';
+
+                return;
+            }
+
             const response = await weatherApi.getLocationWeather(location.value);
             if (!response.success || !response.data) {
                 validationError.value = response.error?.message ?? 'Unknown error';
@@ -44,6 +50,7 @@ export default class AddLocationHook extends AbstractHook {
 
             response.data.order = SimpleUtils.getOrder(this.weatherList);
             location.value = '';
+
             this.setupContext.emit('addLocation', response.data);
         };
 

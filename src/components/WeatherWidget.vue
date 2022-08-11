@@ -1,16 +1,20 @@
 <template>
     <div class="weather-widget">
         <weather-settings-switch/>
-        <weather-settings
-            v-if="settingsActive.value"
-            :weatherList="sortedWeatherList"
-            @addLocation="addLocation"
-            @removeLocation="removeLocation"
-            @onDrop="onDrop"
-            @onDragStart="onDragStart"
-        />
+        <transition name="show-settings" >
+            <weather-settings v-if="settingsActive.value"
+                :weatherList="sortedWeatherList"
+                @addLocation="addLocation"
+                @removeLocation="removeLocation"
+                @onDrop="onDrop"
+                @onDragStart="onDragStart"
+            />
+        </transition>
         <weather-location-list
-            v-else
+            class="weather-widget__locations custom-scroll"
+            :class="{
+                'weather-widget__settings-opened': settingsActive.value,
+            }"
         >
             <weather-location-card
                 v-for="weather in sortedWeatherList"
@@ -39,11 +43,11 @@ export default defineComponent({
         WeatherLocationList, WeatherSettingsSwitch
     },
     setup() {
-        const settingsActiveState = new SettingsActiveState();
-        const settingsActive = settingsActiveState.value;
-        const { weatherList, sortedWeatherList, addLocation, removeLocation } = new WeatherListHook().initHook();
-        const { dragCard, onDragStart, onDrop } = new SortDrugAndDropHook(weatherList).initHook();
-        new LoadInitialDataHook(weatherList).initHook();
+        const settingsActiveState = new SettingsActiveState();                                                      // global settings active flag
+        const settingsActive = settingsActiveState.value;                                                           // reactive flag
+        const { weatherList, sortedWeatherList, addLocation, removeLocation } = new WeatherListHook().initHook();   // list of weather locations
+        const { dragCard, onDragStart, onDrop } = new SortDrugAndDropHook(weatherList).initHook();                  // drag and drop actions
+        new LoadInitialDataHook(weatherList).initHook();                                                            // load initial data for widget
 
         return {
             weatherList, dragCard, settingsActive, sortedWeatherList,
@@ -55,35 +59,62 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+    $background: #519CEA;
+    $light-background: #70B0EF;
+    $text: #fff;
+
     @font-face {
-        font-family: 'agency';
-        src: url('../assets/fonts/agency/AGENCYR.TTF') format('truetype');
+        font-family: 'helvetica';
+        src: url('../assets/fonts/helvetica/helvetica_light.otf') format('otf');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'helvetica';
+        src: url('../assets/fonts/helvetica/helvetica_regular.otf') format('otf');
         font-weight: 400;
         font-style: normal;
         font-display: swap;
     }
 
     @font-face {
-        font-family: 'agency';
-        src: url('../assets/fonts/agency/AGENCYB.TTF') format('truetype');
+        font-family: 'helvetica';
+        src: url('../assets/fonts/helvetica/helvetica_bold.otf') format('otf');
         font-weight: 700;
         font-style: normal;
         font-display: swap;
     }
-
+    input {
+        border: none;
+        &:focus-visible {
+            border: none;
+            outline: none;
+        }
+    }
     .weather-widget {
         box-sizing: border-box;
-        font-family: agency;
+        font-family: helvetica;
         position: relative;
         width: 100%;
         max-width: 300px;
         min-height: 300px;
-        border: 1px solid;
+        background: $background;
+        color: $text;
+
+        &__locations {
+            overflow-x: hidden;
+            overflow-y: auto;
+            max-height: 625px;
+        }
+        &__settings-opened {
+            overflow-y: hidden;
+        }
         & * {
            box-sizing: border-box;
         }
     }
-
     .icon-navigation {
         position: relative;
         padding-left: 20px;
@@ -108,5 +139,32 @@ export default defineComponent({
             left: 0px;
         }
     }
+    .custom-scroll {
+        -webkit-overflow-scrolling: touch;
+        &::-webkit-scrollbar-track {
+            background: #eaeaea;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background: #cdcdcd;
+        }
+        &::-webkit-scrollbar {
+            width: 7px;
+            height: 0;
+        }
+    }
 
+    .show-settings-enter-active {
+        transition: all 0.3s ease-out;
+    }
+
+    .show-settings-leave-active {
+        transition: all 0.3s ease-out;
+    }
+
+    .show-settings-enter-from,
+    .show-settings-leave-to {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
 </style>
