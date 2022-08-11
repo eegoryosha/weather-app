@@ -1,5 +1,14 @@
 # weather-widget-app
 
+Виджет показа погоды в городах. 
+Функционал:
+- возможность добавлять город;
+- менять порядок городов;
+- удалять город;
+- по умолчанию показывается город пользователя;
+- список городов сохраняется в localstorage.
+
+
 ## Project setup
 ```
 npm install
@@ -20,5 +29,9 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Build lib
+```
+npm run lib
+```
+
+
